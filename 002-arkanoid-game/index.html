@@ -1,4 +1,4 @@
-<title>100 proyectos JS · 01 - Arkanoid Game</title>
+<title>100 projects JS · 002 - Arkanoid Game</title>
 <style>
     body {
         background-color: #111;
@@ -12,12 +12,9 @@
         display: block;
     }
 </style>
-
 <canvas></canvas>
-
 <img hidden id="sprite" src="./sprite.png" alt="Sprite Arkanoid" />
 <img hidden id="bricks" src="./bricks.png" alt="Sprite Bricks Arkanoid" />
-
 <script>
     const canvas = document.querySelector('canvas')
     const ctx = canvas.getContext('2d')
@@ -47,7 +44,7 @@
     const paddleWidth = 50
 
     let paddleX = (canvas.width - paddleWidth) / 2
-    let paddleY = canvas.height -paddleHeight - 10
+    let paddleY = canvas.height - paddleHeight - 10
 
     let rightPressed = false
     let leftPressed = false
@@ -77,14 +74,14 @@
 
             const random = Math.floor(Math.random() * 8)
 
-            bricks[c][r] = { 
-                x: brickX, 
-                y: brickY, 
-                status: BRICK_STATUS.ACTIVE, 
+            bricks[c][r] = {
+                x: brickX,
+                y: brickY,
+                status: BRICK_STATUS.ACTIVE,
                 color: random
             }
         }
-    } 
+    }
 
     function drawBall() {
         ctx.beginPath()
@@ -94,7 +91,7 @@
         ctx.closePath()
     }
 
-    function drawPaddle() {        
+    function drawPaddle() {
         ctx.drawImage(
             $sprite,
             29,
@@ -144,10 +141,10 @@
                 const isBallSameXAsBrick =
                     x > currentBrick.x
                     && x < currentBrick.x + brickWidth
-                
+
                 const isBallSameYAsBrick =
                     y > currentBrick.y
-                    && y < currentBrick.y + brickHeight 
+                    && y < currentBrick.y + brickHeight
 
                 if (isBallSameXAsBrick && isBallSameYAsBrick) {
                     dy = -dy
@@ -160,20 +157,20 @@
     function ballMovement() {
         // Rebound balls in laterals: Right & left
         if (
-            x + dx > canvas.width - ballRadius  
+            x + dx > canvas.width - ballRadius
             || x + dx < ballRadius
         ) {
             dx = -dx
         }
 
         // Top border
-        if (y + dy < ballRadius  
+        if (y + dy < ballRadius
         ) {
             dy = -dy
         }
 
         // If Ball touches the Paddle
-        const isBallSameXAsPaddle = 
+        const isBallSameXAsPaddle =
             x > paddleX &&
             x < paddleX + paddleWidth
 
@@ -195,7 +192,7 @@
         if (rightPressed && paddleX < canvas.width - paddleWidth) {
             paddleX += PADDLE_SENSITIBITY
         } else if (leftPressed && paddleX > 0) {
-            paddleX -= PADDLE_SENSITIBITY 
+            paddleX -= PADDLE_SENSITIBITY
         }
     }
 
@@ -207,7 +204,7 @@
         document.addEventListener('keydown', keyDownHandler)
         document.addEventListener('keyup', keyUpHandler)
 
-        function keyDownHandler (event) {
+        function keyDownHandler(event) {
             const { key } = event
             if (key === 'Right' || key === 'ArrowRight') {
                 rightPressed = true
@@ -216,7 +213,7 @@
             }
         }
 
-        function keyUpHandler (event) {
+        function keyUpHandler(event) {
             const { key } = event
             if (key === 'Right' || key === 'ArrowRight') {
                 rightPressed = false
@@ -226,7 +223,7 @@
         }
     }
 
-    function draw () {
+    function draw() {
         cleanCanvas()
         // Draw elements
         drawBall()
@@ -238,7 +235,7 @@
         collisionDetection()
         ballMovement()
         paddleMovement()
-        
+
         counter++
         // Doing your draws and checks of colisions
         window.requestAnimationFrame(draw)
